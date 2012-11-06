@@ -1,4 +1,4 @@
-package com.moac.android.opensecretsanta.engine;
+package com.moac.drawengine;
 
 /**
  *    Copyright 2011 Peter Tackage
@@ -32,7 +32,7 @@ public class BasicDrawEngine implements DrawEngine {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.moac.android.opensecretsanta.engine.DrawEngine#generateDraw(java.
+	 * com.moac.drawengine.DrawEngine#generateDraw(java.
 	 * util.Map)
 	 */
 	public Map<Long, Long> generateDraw(Map<Long, Set<Long>> _members)

@@ -1,4 +1,4 @@
-package com.moac.android.opensecretsanta.engine;
+package com.moac.drawengine;
 
 /**
  *  Copyright 2011 Peter Tackage
