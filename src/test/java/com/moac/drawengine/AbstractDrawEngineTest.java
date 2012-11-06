@@ -35,7 +35,7 @@ import junit.framework.TestCase;
  * Extend and implement any specific tests if required. Otherwise just
  * extend as per @BasicDrawEngineTest
  */
-public abstract class DrawEngineTest extends TestCase {
+public abstract class AbstractDrawEngineTest extends TestCase {
 	
 	DrawEngine engine;
 	
@@ -50,7 +50,7 @@ public abstract class DrawEngineTest extends TestCase {
 		Map<Long, Set<Long>> data = new HashMap<Long, Set<Long>>();
 
 		List<Long> members = new ArrayList<Long>();
-		for (int i =1; i <= 5000; i++)
+		for (int i =1; i <= 1000; i++)
 		{
 			Long m = new Long(i);
 			members.add(m);

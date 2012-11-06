@@ -21,12 +21,12 @@ import com.moac.drawengine.BasicDrawEngine;
 
 /**
  * 
- * Empty child of DrawEngineTest - runs all the standard tests.
+ * Empty child of AbstractDrawEngineTest - runs all the standard tests.
  * 
  * @author peter
  *
  */
-public class BasicDrawEngineTest extends DrawEngineTest {
+public class BasicDrawEngineTest extends AbstractDrawEngineTest {
 	
 	public void setUp()
 	{
