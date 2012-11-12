@@ -47,12 +47,8 @@ public final class DrawEngineProvider {
 			engine = (DrawEngine)newEngineClass.newInstance();
 			DrawEngineProvider.getInstance().setDrawEngine(engine); 
 		}
-		catch (ClassNotFoundException e) {
-			throw new InvalidDrawEngineException("Error: " + e.getMessage(), e);
-		} catch (InstantiationException e) {
-			throw new InvalidDrawEngineException("Error: " + e.getMessage(), e);
-		} catch (IllegalAccessException e) {
-			throw new InvalidDrawEngineException("Error: " + e.getMessage(), e);
+		catch (Exception e) {
+			throw new InvalidDrawEngineException("Error loading Draw Engine: " + classname + ": " + e.getMessage(), e);
 		}
 	
 	}	
