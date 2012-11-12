@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -35,76 +36,96 @@ public class BasicDrawEngine implements DrawEngine {
 	 * com.moac.drawengine.DrawEngine#generateDraw(java.
 	 * util.Map)
 	 */
-	public Map<Long, Long> generateDraw(Map<Long, Set<Long>> _members)
+	public Map<Long, Long> generateDraw(final Map<Long, Set<Long>> _members)
 			throws DrawFailureException {
-
+		
 		// TODO Would like minimise some of the creation of new ArrayLists
-		// from the Sets.
+		// from the Sets. In fact, I would like to rewrite the whole thing..
 
 		// Can't draw zero or single length
 		if (_members == null || _members.size() < 2) {
 			throw new DrawFailureException("Can't have less than two members.");
 		}
 
-		Map<Long, Long> finalResult = new HashMap<Long, Long>();
+		// Initialise to desired size (performance)
+		Map<Long, Long> result = new HashMap<Long, Long>(_members.size());
 
 		// Shuffle the one input list
 		List<Long> randomMembers = new ArrayList<Long>(_members.keySet());
 		Collections.shuffle(randomMembers, new Random());
-
+				
 		// Sort based on number of restrictions.
 		// Most restrictive first to minimise rollbacks.
 		List<Long> sortedMembers = new ArrayList<Long>(_members.keySet());
 		Collections.sort(sortedMembers, new RestrictionsComparator(_members));
+		
+		Map<Long, Set<Long>> failedPaths = new HashMap<Long, Set<Long>>();
 
 		int rowIndex = 0;
 		// If the index goes back less than 0 ... we won't find anything.
 		while (rowIndex >= 0 && rowIndex < sortedMembers.size()) {
+			
 			Long from = sortedMembers.get(rowIndex);
-			Long lastAssignment = finalResult.get(from);
-
-			// If there is an existing assignment for a member, then
-			// it's because we have done a rollback - so add this value to the
-			// list of restrictions.
-			if (lastAssignment != null) {
-				_members.get(from).add(lastAssignment);
-				finalResult.remove(from); // no use anymore
-			}
-
 			Long to = null;
-
+			
+			// If there is an existing assignment for a member, then
+			// it's because we have done a rollback to here - so add this value to the
+			// list of failed paths for this node.
+			Long lastfailedPath = result.remove(from);
+			
+			Set<Long> nodeFailedPaths = failedPaths.get(from);		
+			if (lastfailedPath != null) {
+				if (nodeFailedPaths == null)
+				{
+					nodeFailedPaths = new HashSet<Long>();
+				}
+				nodeFailedPaths.add(lastfailedPath);
+				failedPaths.put(from, nodeFailedPaths);			
+			}
+			
 			// Try to find an allowed match - pick from the randomised list.
 			for (Long pick : randomMembers) {
 
 				/*
 				 * 1. Can't pick self 2. Can't be restricted 3. Can't pick if
-				 * already picked
+				 * already picked 4.Can't pick a failed path for this node.
 				 */
-				if (!(pick.equals(from) || _members.get(from).contains(pick) || finalResult
-						.containsValue(pick))) {
+				if (!(pick.equals(from) || _members.get(from).contains(pick) || result
+						.containsValue(pick) || (nodeFailedPaths != null && nodeFailedPaths.contains(pick)))) {
 					to = pick;
 					break;
 				}
 			}
 
 			if (to == null) {
-				// Go back a row and choose differently.
+				// Go back to previous node and choose differently.
+				
+				// Clear any failed paths from current node.
+				if (nodeFailedPaths != null)
+				{
+					nodeFailedPaths.clear(); 
+				}
 				rowIndex--;
+				
 			} else {
-				// Will overwrite any existing assignment.
-				finalResult.put(from, to);
+				// Set path and visit next node.
+				result.put(from, to);
 				rowIndex++;
 			}
-
+			
 		}
 
-		if (finalResult.size() == _members.size()) {
-			return finalResult;
+		if (result.size() == _members.size()) {
+			return result;
 		} else {
 			throw new DrawFailureException();
 		}
 	}
 
+	/**
+	 * Orders members in a descending order of restrictedness.
+	 *
+	 */
 	private class RestrictionsComparator implements Comparator<Long> {
 		private Map<Long, Set<Long>> mRestrictionsMap;
 

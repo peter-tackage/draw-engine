@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.moac.drawengine.DrawEngine;
@@ -59,7 +60,7 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		}
 
 			Map<Long, Long> result =  engine.generateDraw(data);			
-			assertEquals(data.keySet().size(), result.size());
+			verifyResult(data, result);
 
 	}
 	
@@ -85,7 +86,7 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		data.put(m4, new HashSet<Long>());		
 
 		Map<Long, Long> result =  engine.generateDraw(data);
-		assertEquals(data.keySet().size(), result.size());
+		verifyResult(data, result);
 
 	}
 	
@@ -161,7 +162,7 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		}	
 
 		Map<Long, Long> result = engine.generateDraw(data);
-		assertEquals(data.keySet().size(), result.size());
+		verifyResult(data, result);
 	
 	}
 	
@@ -353,7 +354,7 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		}	
 
 			Map<Long, Long> result = engine.generateDraw(data);
-			assertEquals(data.keySet().size(), result.size());
+			verifyResult(data, result);
 	
 	}
 	
@@ -441,7 +442,7 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		data.put(m2, new HashSet<Long>());		
 	
 		Map<Long, Long> result =  engine.generateDraw(data);
-		assertEquals(data.keySet().size(), result.size());
+		verifyResult(data, result);
 	
 	}
 	
@@ -457,4 +458,167 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 
 		
 	}
+	/*
+	 * Two married grandparents, two daughters and sons-in-law and two children for each daughter.
+	 * 
+	 *  I restricted spouses from giving to each other.
+	 *  I also restricted the grand children from giving to their siblings or their own parents 
+	 *  and the middle generation parents from giving to their own children. 
+	 *  
+	 *  Maybe a tough challenge, but everyone should have had at least six people they could give to.
+	 */
+	public void testPaulsScenario() throws InstantiationException, IllegalAccessException, DrawFailureException
+	{
+		// Make this a large multiple of the input data size - try to account for randomisation.
+		for (int i=0; i<500; i++)
+		{
+
+		Long gp1 = Long.valueOf(1);
+		Long gp2 = Long.valueOf(2);
+		
+		Long d1 = Long.valueOf(3);
+		Long d2 = Long.valueOf(4);
+		
+		Long sil1 = Long.valueOf(5);
+		Long sil2 = Long.valueOf(6);	
+		
+		Long c1 = Long.valueOf(7);	
+		Long c2 = Long.valueOf(8);	
+		Long c3 = Long.valueOf(9);	
+		Long c4 = Long.valueOf(10);	
+		
+		Map<Long, Set<Long>> data = new HashMap<Long, Set<Long>>();
+		
+		// gp1 cannot give to gp2
+		{
+			Set<Long> gp1Rs = new HashSet<Long>();
+			gp1Rs.add(gp2);
+			data.put(gp1, gp1Rs);	
+		}
+		
+		// gp2 cannot give to gp1
+		{
+			Set<Long> gp2Rs = new HashSet<Long>();
+			gp2Rs.add(gp1);
+			data.put(gp2, gp2Rs);	
+		}
+		
+		// d1 can't give to sil1, c1 or c2
+		{
+			Set<Long> d1Rs = new HashSet<Long>();
+			d1Rs.add(sil1);
+			d1Rs.add(c1);
+			d1Rs.add(c2);
+			data.put(d1, d1Rs);	
+		}
+		
+		// d2 can't give to sil2, c3 or c4
+		{
+			Set<Long> d2Rs = new HashSet<Long>();
+			d2Rs.add(sil2);
+			d2Rs.add(c3);
+			d2Rs.add(c4);
+			data.put(d2, d2Rs);	
+		}
+		
+		// sil1 can't give to d1, c1 or c2
+		{
+			Set<Long> sil1Rs = new HashSet<Long>();
+			sil1Rs.add(d1);
+			sil1Rs.add(c1);
+			sil1Rs.add(c2);
+			data.put(sil1, sil1Rs);	
+		}
+		
+		// sil2 can't give to d2, c3 or c4
+		{
+			Set<Long> sil2Rs = new HashSet<Long>();
+			sil2Rs.add(d2);
+			sil2Rs.add(c3);
+			sil2Rs.add(c4);
+			data.put(sil2, sil2Rs);	
+		}
+		
+		// c1 can't give to d1,sil1 or c2
+		{
+			Set<Long> c1Rs = new HashSet<Long>();
+			c1Rs.add(d1);
+			c1Rs.add(sil1);
+			c1Rs.add(c2);
+			data.put(c1, c1Rs);	
+		}
+		
+		// c2 can't give to d1,sil1 or c1
+		{
+			Set<Long> c2Rs = new HashSet<Long>();
+			c2Rs.add(d1);
+			c2Rs.add(sil1);
+			c2Rs.add(c1);
+			data.put(c2, c2Rs);	
+		}
+		
+		// c3 can't give to d2,sil2 or c4
+		{
+			Set<Long> c3Rs = new HashSet<Long>();
+			c3Rs.add(d2);
+			c3Rs.add(sil2);
+			c3Rs.add(c4);
+			data.put(c3, c3Rs);	
+		}
+		
+		// c4 can't give to d2,sil2 or c3
+		{
+			Set<Long> c4Rs = new HashSet<Long>();
+			c4Rs.add(d2);
+			c4Rs.add(sil2);
+			c4Rs.add(c3);
+			data.put(c4, c4Rs);	
+		}
+		
+		// Sanity check the test member and restriction data
+		assertEquals(10, data.size());
+		assertEquals(1, data.get(gp1).size());
+		assertEquals(1, data.get(gp2).size());
+		assertEquals(3, data.get(d1).size());
+		assertEquals(3, data.get(sil1).size());
+		assertEquals(3, data.get(d2).size());
+		assertEquals(3, data.get(sil2).size());
+		assertEquals(3, data.get(c1).size());
+		assertEquals(3, data.get(c2).size());
+		assertEquals(3, data.get(c3).size());
+		assertEquals(3, data.get(c4).size());
+		
+		Map<Long, Long> result =  engine.generateDraw(data);
+		verifyResult(data, result);
+		}
+	}
+	
+	
+	/**
+	 * Verifies if a draw result was completed correctly.
+	 * 
+	 * @param input (members and their restrictions)
+	 * @param result (assignments)
+	 */
+	public void verifyResult(Map<Long, Set<Long>> input, Map<Long, Long> result)
+	{
+		// Verify same number of givers as entrants
+		assertEquals(input.keySet().size(), result.size()); 
+		
+		// Verify all givers assign to non-null
+		assertFalse(result.containsValue(null));
+		
+		for (Entry<Long, Long> entry: result.entrySet())
+		{
+			// Assignment is one of the entrant members
+			assertTrue(input.containsKey(entry.getValue()));
+			
+			// Giver is one of the entrant members
+			assertTrue(input.containsKey(entry.getKey())); 
+			
+			// Assignment is NOT a restriction of the giver
+			assertFalse(input.get(entry.getKey()).contains(entry.getValue()));
+		}
+
+	} 
 }
