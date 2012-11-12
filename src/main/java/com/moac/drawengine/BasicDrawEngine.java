@@ -36,28 +36,28 @@ public class BasicDrawEngine implements DrawEngine {
 	 * com.moac.drawengine.DrawEngine#generateDraw(java.
 	 * util.Map)
 	 */
-	public Map<Long, Long> generateDraw(final Map<Long, Set<Long>> _members)
+	public Map<Long, Long> generateDraw(final Map<Long, Set<Long>> members)
 			throws DrawFailureException {
 		
 		// TODO Would like minimise some of the creation of new ArrayLists
 		// from the Sets. In fact, I would like to rewrite the whole thing..
 
 		// Can't draw zero or single length
-		if (_members == null || _members.size() < 2) {
+		if (members == null || members.size() < 2) {
 			throw new DrawFailureException("Can't have less than two members.");
 		}
 
 		// Initialise to desired size (performance)
-		Map<Long, Long> result = new HashMap<Long, Long>(_members.size());
+		Map<Long, Long> result = new HashMap<Long, Long>(members.size());
 
 		// Shuffle the one input list
-		List<Long> randomMembers = new ArrayList<Long>(_members.keySet());
+		List<Long> randomMembers = new ArrayList<Long>(members.keySet());
 		Collections.shuffle(randomMembers, new Random());
 				
 		// Sort based on number of restrictions.
 		// Most restrictive first to minimise rollbacks.
-		List<Long> sortedMembers = new ArrayList<Long>(_members.keySet());
-		Collections.sort(sortedMembers, new RestrictionsComparator(_members));
+		List<Long> sortedMembers = new ArrayList<Long>(members.keySet());
+		Collections.sort(sortedMembers, new RestrictionsComparator(members));
 		
 		Map<Long, Set<Long>> failedPaths = new HashMap<Long, Set<Long>>();
 
@@ -90,7 +90,7 @@ public class BasicDrawEngine implements DrawEngine {
 				 * 1. Can't pick self 2. Can't be restricted 3. Can't pick if
 				 * already picked 4.Can't pick a failed path for this node.
 				 */
-				if (!(pick.equals(from) || _members.get(from).contains(pick) || result
+				if (!(pick.equals(from) || members.get(from).contains(pick) || result
 						.containsValue(pick) || (nodeFailedPaths != null && nodeFailedPaths.contains(pick)))) {
 					to = pick;
 					break;
@@ -115,7 +115,7 @@ public class BasicDrawEngine implements DrawEngine {
 			
 		}
 
-		if (result.size() == _members.size()) {
+		if (result.size() == members.size()) {
 			return result;
 		} else {
 			throw new DrawFailureException();
@@ -129,8 +129,8 @@ public class BasicDrawEngine implements DrawEngine {
 	private class RestrictionsComparator implements Comparator<Long> {
 		private Map<Long, Set<Long>> mRestrictionsMap;
 
-		public RestrictionsComparator(Map<Long, Set<Long>> _restrictions) {
-			mRestrictionsMap = _restrictions;
+		public RestrictionsComparator(Map<Long, Set<Long>> restrictions) {
+			mRestrictionsMap = restrictions;
 		}
 
 		public int compare(Long l1, Long l2) {

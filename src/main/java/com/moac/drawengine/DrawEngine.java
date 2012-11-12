@@ -38,6 +38,6 @@ public interface DrawEngine {
 	 * 
 	 * Thrown if assignments are unable to be made for any reason - i.e. an unsuccessful draw.
 	 */
-	public Map<Long, Long> generateDraw(Map<Long, Set<Long>> _members) throws DrawFailureException;
+	public Map<Long, Long> generateDraw(Map<Long, Set<Long>> members) throws DrawFailureException;
 	
 }
