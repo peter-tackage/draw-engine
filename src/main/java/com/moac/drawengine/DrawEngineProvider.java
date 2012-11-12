@@ -38,12 +38,23 @@ public final class DrawEngineProvider {
 		return mEngine;
 	}
 		
-	public void setDrawEngine(String classname) throws Exception {
+	public void setDrawEngine(String classname) throws InvalidDrawEngineException {
 
-		Class<? extends DrawEngine>  newEngineClass = 
-			Class.forName(classname).asSubclass(DrawEngine.class);
-		DrawEngine engine = (DrawEngine)newEngineClass.newInstance();
-		DrawEngineProvider.getInstance().setDrawEngine(engine); 
+		Class<? extends DrawEngine> newEngineClass;
+		try {
+			newEngineClass = Class.forName(classname).asSubclass(DrawEngine.class);
+			DrawEngine engine;
+			engine = (DrawEngine)newEngineClass.newInstance();
+			DrawEngineProvider.getInstance().setDrawEngine(engine); 
+		}
+		catch (ClassNotFoundException e) {
+			throw new InvalidDrawEngineException("Error: " + e.getMessage(), e);
+		} catch (InstantiationException e) {
+			throw new InvalidDrawEngineException("Error: " + e.getMessage(), e);
+		} catch (IllegalAccessException e) {
+			throw new InvalidDrawEngineException("Error: " + e.getMessage(), e);
+		}
+	
 	}	
 	
 	private void setDrawEngine(DrawEngine to)
