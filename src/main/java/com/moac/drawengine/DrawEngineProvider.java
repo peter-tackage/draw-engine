@@ -18,43 +18,25 @@ package com.moac.drawengine;
  */
 
 public final class DrawEngineProvider {
-	
-	private static DrawEngineProvider instance = null;
-	
+		
 	private DrawEngine mEngine = null;
-	
-	// Private for singleton
-	private DrawEngineProvider()
-	{}
-	
-	public static DrawEngineProvider getInstance() {
-		if (instance == null){
-			instance = new DrawEngineProvider();
-	}
-		return instance;
-	}
-	
-	public DrawEngine getDrawEngine() {
+		
+	public DrawEngine getDrawEngine() throws InvalidDrawEngineException {
 		return mEngine;
 	}
 		
 	public void setDrawEngine(String classname) throws InvalidDrawEngineException {
 
-		Class<? extends DrawEngine> newEngineClass;
 		try {
+			Class<? extends DrawEngine> newEngineClass;
 			newEngineClass = Class.forName(classname).asSubclass(DrawEngine.class);
-			DrawEngine engine;
-			engine = (DrawEngine)newEngineClass.newInstance();
-			DrawEngineProvider.getInstance().setDrawEngine(engine); 
+			mEngine = (DrawEngine)newEngineClass.newInstance();
 		}
 		catch (Exception e) {
+			mEngine = null;
 			throw new InvalidDrawEngineException("Error loading Draw Engine: " + classname + ": " + e.getMessage(), e);
 		}
 	
 	}	
 	
-	private void setDrawEngine(DrawEngine to)
-	{
-		mEngine = to;
-	}
 }

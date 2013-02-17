@@ -27,18 +27,18 @@ public class DrawEngineProviderTest extends TestCase {
 	
 	public void testSetValidDrawEngine() throws Exception
 	{
-		DrawEngineProvider instance = DrawEngineProvider.getInstance();	
-		instance.setDrawEngine("com.moac.drawengine.BasicDrawEngine");
-		assertTrue(instance.getDrawEngine().getClass().equals(BasicDrawEngine.class));
+		DrawEngineProvider dep = new DrawEngineProvider();	
+		dep.setDrawEngine("com.moac.drawengine.BasicDrawEngine");
+		assertTrue(dep.getDrawEngine().getClass().equals(BasicDrawEngine.class));
 	}
 	
 	public void testSetInvalidDrawEngine() {
 		try
 		{
-			DrawEngineProvider instance = DrawEngineProvider.getInstance();	
-			instance.setDrawEngine("NOT A VALID CLASSNAME");
-			fail("Should have thrown an Exception to due invalid classname");
-		} catch (Exception exp)
+			DrawEngineProvider dep = new DrawEngineProvider();	
+			dep.setDrawEngine("NOT A VALID CLASSNAME");
+			fail("Should have thrown a InvalidDrawEngineException to due invalid classname");
+		} catch (InvalidDrawEngineException exp)
 		{
 			assertTrue(true);
 		}
