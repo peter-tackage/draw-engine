@@ -51,10 +51,11 @@ public abstract class AbstractDrawEngineTest {
 
         SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
+        @SuppressWarnings("unused")
         List<Long> members = new ArrayList<Long>();
         // 100 members
         for(int i = 1; i <= 1000; i++) {
-            Long m = new Long(i);
+            Long m = (long) i;
             members.add(m);
             // Add empty restrictions.
             input.put(m, new HashSet<Long>());
@@ -73,10 +74,10 @@ public abstract class AbstractDrawEngineTest {
     @Test
     public void possibleSimple() throws DrawFailureException, InstantiationException, IllegalAccessException {
 
-        Long m1 = Long.valueOf(1);
-        Long m2 = Long.valueOf(2);
-        Long m3 = Long.valueOf(3);
-        Long m4 = Long.valueOf(4);
+        Long m1 = (long) 1;
+        Long m2 = (long) 2;
+        Long m3 = (long) 3;
+        Long m4 = (long) 4;
 
         SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
@@ -111,12 +112,12 @@ public abstract class AbstractDrawEngineTest {
 		 */
 
         for(int i = 0; i < 500; i++) {
-            Long m1 = Long.valueOf(1);
-            Long m2 = Long.valueOf(2);
-            Long m3 = Long.valueOf(3);
-            Long m4 = Long.valueOf(4);
-            Long m5 = Long.valueOf(5);
-            Long m6 = Long.valueOf(6);
+            Long m1 = (long) 1;
+            Long m2 = (long) 2;
+            Long m3 = (long) 3;
+            Long m4 = (long) 4;
+            Long m5 = (long) 5;
+            Long m6 = (long) 6;
 
             SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
@@ -192,7 +193,7 @@ public abstract class AbstractDrawEngineTest {
     @Test
     public void failOnlyOneMember() throws InstantiationException, IllegalAccessException {
 
-        Long m1 = new Long(1);
+        Long m1 = (long) 1;
 
         SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
@@ -217,12 +218,12 @@ public abstract class AbstractDrawEngineTest {
     @Test
     public void impossibleComplicatedRestrictions() throws InstantiationException, IllegalAccessException {
 
-        Long m1 = Long.valueOf(1);
-        Long m2 = Long.valueOf(2);
-        Long m3 = Long.valueOf(3);
-        Long m4 = Long.valueOf(4);
-        Long m5 = Long.valueOf(5);
-        Long m6 = Long.valueOf(6);
+        Long m1 = (long) 1;
+        Long m2 = (long) 2;
+        Long m3 = (long) 3;
+        Long m4 = (long) 4;
+        Long m5 = (long) 5;
+        Long m6 = (long) 6;
 
         SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
@@ -302,12 +303,12 @@ public abstract class AbstractDrawEngineTest {
 
         // TODO Test Randomisation
         for(int i = 0; i < 500.; i++) {
-            Long m1 = Long.valueOf(1);
-            Long m2 = Long.valueOf(2);
-            Long m3 = Long.valueOf(3);
-            Long m4 = Long.valueOf(4);
-            Long m5 = Long.valueOf(5);
-            Long m6 = Long.valueOf(6);
+            Long m1 = (long) 1;
+            Long m2 = (long) 2;
+            Long m3 = (long) 3;
+            Long m4 = (long) 4;
+            Long m5 = (long) 5;
+            Long m6 = (long) 6;
 
             SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
@@ -395,8 +396,8 @@ public abstract class AbstractDrawEngineTest {
     @Test
     public void impossiblePairNotSymmetrical() throws InstantiationException, IllegalAccessException {
 
-        Long m1 = new Long(1);
-        Long m2 = new Long(2);
+        Long m1 = (long) 1;
+        Long m2 = (long) 2;
 
         SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
@@ -416,10 +417,10 @@ public abstract class AbstractDrawEngineTest {
 
     @Test
     public void impossibleSymmetrical() throws InstantiationException, IllegalAccessException {
-
+        @SuppressWarnings("unused")
         List<Long> members = new ArrayList<Long>();
-        Long m1 = new Long(1);
-        Long m2 = new Long(2);
+        Long m1 = (long) 1;
+        Long m2 = (long) 2;
         members.add(m1);
         members.add(m2);
 
@@ -453,8 +454,8 @@ public abstract class AbstractDrawEngineTest {
     public void possibleSelfRestrict() throws DrawFailureException, InstantiationException, IllegalAccessException {
 
         // Simple draw - two members only.
-        Long m1 = Long.valueOf(1);
-        Long m2 = Long.valueOf(2);
+        Long m1 = (long) 1;
+        Long m2 = (long) 2;
 
         SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
@@ -495,19 +496,19 @@ public abstract class AbstractDrawEngineTest {
         // TODO Control randomisation
         for(int i = 0; i < 500; i++) {
 
-            Long gp1 = Long.valueOf(1);
-            Long gp2 = Long.valueOf(2);
+            Long gp1 = (long) 1;
+            Long gp2 = (long) 2;
 
-            Long d1 = Long.valueOf(3);
-            Long d2 = Long.valueOf(4);
+            Long d1 = (long) 3;
+            Long d2 = (long) 4;
 
-            Long sil1 = Long.valueOf(5);
-            Long sil2 = Long.valueOf(6);
+            Long sil1 = (long) 5;
+            Long sil2 = (long) 6;
 
-            Long c1 = Long.valueOf(7);
-            Long c2 = Long.valueOf(8);
-            Long c3 = Long.valueOf(9);
-            Long c4 = Long.valueOf(10);
+            Long c1 = (long) 7;
+            Long c2 = (long) 8;
+            Long c3 = (long) 9;
+            Long c4 = (long) 10;
 
             SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 

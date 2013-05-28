@@ -22,7 +22,7 @@ import java.util.Set;
 public interface DrawEngine {
 
     /**
-     * @param _members A mapping between the members in the draw and their associated restrictions.
+     * @param members A mapping between the members in the draw and their associated restrictions.
      *                 Members with no restrictions will be mapped to an empty Set.
      * @return A mapping between the member and their assignment.
      *         A value should only be returned if the draw was successful.

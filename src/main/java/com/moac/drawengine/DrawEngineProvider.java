@@ -29,7 +29,7 @@ public final class DrawEngineProvider {
         try {
             Class<? extends DrawEngine> newEngineClass;
             newEngineClass = Class.forName(classname).asSubclass(DrawEngine.class);
-            mEngine = (DrawEngine) newEngineClass.newInstance();
+            mEngine = newEngineClass.newInstance();
         } catch(Exception e) {
             mEngine = null;
             throw new InvalidDrawEngineException("Error loading Draw Engine: " + classname + ": " + e.getMessage(), e);
