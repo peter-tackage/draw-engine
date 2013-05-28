@@ -17,25 +17,23 @@ import org.junit.Before;
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- * 
+ *
  */
 
 /**
- * 
  * Empty child of AbstractDrawEngineTest - runs all the standard tests.
- * 
- * @author peter
  *
+ * @author peter
  */
 public class BasicDrawEngineTest extends AbstractDrawEngineTest {
 
     @Before
-	public void setUp() {
-		engine = new BasicDrawEngine();
-	}
+    public void setUp() {
+        engine = new BasicDrawEngine();
+    }
 
     @After
-	public void tearDown() {
-		engine = null;
-	}
+    public void tearDown() {
+        engine = null;
+    }
 }
