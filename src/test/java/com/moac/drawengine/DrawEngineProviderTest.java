@@ -17,15 +17,19 @@ package com.moac.drawengine;
  * 
  */
 
-import com.moac.drawengine.BasicDrawEngine;
-import com.moac.drawengine.DrawEngineProvider;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 
-public class DrawEngineProviderTest extends TestCase {
-	
-	public void testSetValidDrawEngine() throws Exception
+@RunWith(JUnit4.class)
+public class DrawEngineProviderTest {
+
+    @Test
+	public void setValidDrawEngine() throws Exception
 	{
 		DrawEngineProvider dep = new DrawEngineProvider();	
 		dep.setDrawEngine("com.moac.drawengine.BasicDrawEngine");

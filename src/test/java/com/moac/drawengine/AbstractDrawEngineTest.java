@@ -26,10 +26,11 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import com.moac.drawengine.DrawEngine;
-import com.moac.drawengine.DrawFailureException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
 /*
  * Tests suitable for all implementations of DrawEngine
@@ -38,7 +39,8 @@ import junit.framework.TestCase;
  * extend as per @BasicDrawEngineTest
  * 
  */
-public abstract class AbstractDrawEngineTest extends TestCase {
+@RunWith(JUnit4.class)
+public abstract class AbstractDrawEngineTest {
 
 	// The DrawEngine under test.
 	DrawEngine engine;
@@ -48,7 +50,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public void testPossibleManyMembers() throws DrawFailureException, InstantiationException, IllegalAccessException
+    @Test
+	public void possibleManyMembers() throws DrawFailureException, InstantiationException, IllegalAccessException
 	{
 
 		SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
@@ -74,7 +77,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public void testPossibleSimple() throws DrawFailureException, InstantiationException, IllegalAccessException
+    @Test
+	public void possibleSimple() throws DrawFailureException, InstantiationException, IllegalAccessException
 	{
 
 		Long m1 = Long.valueOf(1);
@@ -94,7 +98,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 
 	}
 
-	public void testPossibleComplicatedRestrictions() throws DrawFailureException, InstantiationException, IllegalAccessException 	{
+    @Test
+	public void possibleComplicatedRestrictions() throws DrawFailureException, InstantiationException, IllegalAccessException 	{
 
 		// TODO Control randomisation
 		
@@ -196,7 +201,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public void testFailOnlyOneMember() throws InstantiationException, IllegalAccessException
+    @Test
+	public void failOnlyOneMember() throws InstantiationException, IllegalAccessException
 	{
 
 		Long m1 = new Long(1);
@@ -220,7 +226,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public void testImpossibleComplicatedRestrictions() throws InstantiationException, IllegalAccessException 	{
+    @Test
+	public void impossibleComplicatedRestrictions() throws InstantiationException, IllegalAccessException 	{
 
 		Long m1 = Long.valueOf(1);
 		Long m2 = Long.valueOf(2);
@@ -305,7 +312,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 	/*
 	 * Only a single path is possible m1->m2->m3->m4->m5->m6->m1
 	 */
-	public void testPossibleSinglePath() throws DrawFailureException, InstantiationException, IllegalAccessException 	{
+    @Test
+	public void possibleSinglePath() throws DrawFailureException, InstantiationException, IllegalAccessException 	{
 
 		// TODO Test Randomisation
 		for (int i=0; i<500.; i++)
@@ -388,7 +396,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		}
 	}
 
-	public void testFailEmptyMembers() throws InstantiationException, IllegalAccessException
+    @Test
+	public void failEmptyMembers() throws InstantiationException, IllegalAccessException
 	{
 
 		SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
@@ -402,7 +411,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		}
 	}
 
-	public void testImpossiblePairNotSymmetrical() throws InstantiationException, IllegalAccessException
+    @Test
+	public void impossiblePairNotSymmetrical() throws InstantiationException, IllegalAccessException
 	{
 
 		Long m1 = new Long(1);
@@ -424,7 +434,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 		}
 	}
 
-	public void testImpossibleSymmetrical() throws InstantiationException, IllegalAccessException
+    @Test
+	public void impossibleSymmetrical() throws InstantiationException, IllegalAccessException
 	{
 
 		List<Long> members = new ArrayList<Long>();
@@ -460,7 +471,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
 	 */
-	public void testPossibleSelfRestrict() throws DrawFailureException, InstantiationException, IllegalAccessException
+    @Test
+	public void possibleSelfRestrict() throws DrawFailureException, InstantiationException, IllegalAccessException
 	{
 
 		// Simple draw - two members only.
@@ -480,7 +492,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 
 	}
 
-	public void testImpossibleNullMembers() throws InstantiationException, IllegalAccessException 
+    @Test
+	public void impossibleNullMembers() throws InstantiationException, IllegalAccessException
 	{
 
 		try {
@@ -502,7 +515,8 @@ public abstract class AbstractDrawEngineTest extends TestCase {
 	 *  
 	 *  Maybe a tough challenge, but everyone should have had at least six people they could give to.
 	 */
-	public void testPaulsScenario() throws InstantiationException, IllegalAccessException, DrawFailureException
+    @Test
+	public void paulsScenario() throws InstantiationException, IllegalAccessException, DrawFailureException
 	{
 
 		// TODO Control randomisation

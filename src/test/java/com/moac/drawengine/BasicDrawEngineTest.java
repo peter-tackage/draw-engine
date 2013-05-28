@@ -1,6 +1,7 @@
 package com.moac.drawengine;
 
-import com.moac.drawengine.BasicDrawEngine;
+import org.junit.After;
+import org.junit.Before;
 
 /**
  *  Copyright 2011 Peter Tackage
@@ -27,15 +28,14 @@ import com.moac.drawengine.BasicDrawEngine;
  *
  */
 public class BasicDrawEngineTest extends AbstractDrawEngineTest {
-	
-	public void setUp()
-	{
+
+    @Before
+	public void setUp() {
 		engine = new BasicDrawEngine();
 	}
-	
-	public void tearDown()
-	{
+
+    @After
+	public void tearDown() {
 		engine = null;
 	}
-
 }
