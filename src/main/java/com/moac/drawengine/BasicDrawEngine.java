@@ -31,8 +31,10 @@ public class BasicDrawEngine implements DrawEngine {
     public Map<Long, Long> generateDraw(final Map<Long, Set<Long>> members)
       throws DrawFailureException {
 
-        // TODO Would like minimise some of the creation of new ArrayLists
-        // from the Sets. In fact, I would like to rewrite the whole thing..
+        /**
+         * TODO Would like minimise some of the creation of new ArrayLists
+         * from the Sets. In fact, I would like to rewrite the whole thing..
+         */
 
         // Can't draw zero or single length
         if(members == null || members.size() < 2) {
