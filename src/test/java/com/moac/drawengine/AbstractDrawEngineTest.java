@@ -43,6 +43,7 @@ import static org.junit.Assert.*;
 public abstract class AbstractDrawEngineTest {
 
 	// The DrawEngine under test.
+    // This should be instantiated by the concrete implementations of this class.
 	DrawEngine engine;
 
 	/**
@@ -70,7 +71,6 @@ public abstract class AbstractDrawEngineTest {
 		verifyResult(input, result);
 
 	}
-
 
 	/**
 	 * Four members, no restrictions. Should succeed.
