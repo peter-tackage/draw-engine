@@ -7,6 +7,6 @@ The library allows for a multiple implementations of the draw mechanism via the 
 
 The BasicDrawEngine class provides an example implementation. It's certainly not efficient or "good", but it works well enough.
 
-All DrawEngine implementations should at least fullfil the tests in the AbstractDrawEngineTest class.
+All DrawEngine implementations should at least fulfil the tests in the AbstractDrawEngineTest class.
 
 Refer to BasicDrawEngineTest as an example for testing a specific implementation.
