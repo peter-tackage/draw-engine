@@ -1,0 +1,19 @@
+# This scenario should be possible
+
+# m1 can only give to 2,4
+1 3,6
+
+# m2 can only give to m3
+2 1,4,5,6
+
+# m3 can only give to m4
+3 1,2,5,6
+
+# m4 can only give to m5 and m1
+4 2,3,6
+
+# m5 can only give to m6
+5 1,2,3,4
+
+# m6 can only give to m5
+6 1,2,3,4

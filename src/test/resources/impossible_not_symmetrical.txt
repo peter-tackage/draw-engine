@@ -1,0 +1,3 @@
+# Should be impossible, only possible assignment is restricted for member 1
+1 2
+2

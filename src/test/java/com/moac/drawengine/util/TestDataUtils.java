@@ -21,6 +21,8 @@ public class TestDataUtils {
             while(scanner.hasNextLine()) {
                 if(scanner.hasNextLong()) {
                     Map.Entry<Long, Set<Long>> entry = processLine(scanner.nextLine());
+                    if(group.containsKey(entry.getKey()))
+                        throw new RuntimeException("Duplicate member found in test file: " + entry.getKey());
                     group.put(entry.getKey(), entry.getValue());
                 } else {
                     scanner.nextLine(); // skip
@@ -29,7 +31,7 @@ public class TestDataUtils {
             scanner.close();
             return group;
         } catch(URISyntaxException ex) {
-            throw new RuntimeException("File could not be read: " + _filename, ex);
+            throw new IllegalArgumentException("File could not be read: " + _filename, ex);
         } catch(FileNotFoundException ex) {
             throw new RuntimeException("File could not be read: " + _filename, ex);
         }

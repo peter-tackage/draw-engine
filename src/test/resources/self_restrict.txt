@@ -1,0 +1,4 @@
+# Simple draw - two members only.
+# We should ignore attempts to self restrict - this draw should be possible.
+1 1
+2
