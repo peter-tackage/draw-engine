@@ -17,6 +17,7 @@ package com.moac.drawengine;
  *
  */
 
+import com.moac.drawengine.util.TestDataUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -51,12 +52,9 @@ public abstract class AbstractDrawEngineTest {
 
         SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
 
-        @SuppressWarnings("unused")
-        List<Long> members = new ArrayList<Long>();
-        // 100 members
+        // 1000 members
         for(int i = 1; i <= 1000; i++) {
             Long m = (long) i;
-            members.add(m);
             // Add empty restrictions.
             input.put(m, new HashSet<Long>());
         }
@@ -492,125 +490,25 @@ public abstract class AbstractDrawEngineTest {
      */
     @Test
     public void paulsScenario() throws InstantiationException, IllegalAccessException, DrawFailureException {
+        System.out.println("Testing: ");
 
         // TODO Control randomisation
+        Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("pauls_test.txt");
+
+        // Sanity check the test member and restriction input
+        assertEquals(10, input.size());
+        assertEquals(1, input.get(1l).size());
+        assertEquals(1, input.get(2l).size());
+        assertEquals(3, input.get(3l).size());
+        assertEquals(3, input.get(4l).size());
+        assertEquals(3, input.get(5l).size());
+        assertEquals(3, input.get(6l).size());
+        assertEquals(3, input.get(7l).size());
+        assertEquals(3, input.get(8l).size());
+        assertEquals(3, input.get(9l).size());
+        assertEquals(3, input.get(10l).size());
+
         for(int i = 0; i < 500; i++) {
-
-            Long gp1 = (long) 1;
-            Long gp2 = (long) 2;
-
-            Long d1 = (long) 3;
-            Long d2 = (long) 4;
-
-            Long sil1 = (long) 5;
-            Long sil2 = (long) 6;
-
-            Long c1 = (long) 7;
-            Long c2 = (long) 8;
-            Long c3 = (long) 9;
-            Long c4 = (long) 10;
-
-            SortedMap<Long, Set<Long>> input = new TreeMap<Long, Set<Long>>();
-
-            // gp1 cannot give to gp2
-            {
-                Set<Long> gp1Rs = new HashSet<Long>();
-                gp1Rs.add(gp2);
-                input.put(gp1, gp1Rs);
-            }
-
-            // gp2 cannot give to gp1
-            {
-                Set<Long> gp2Rs = new HashSet<Long>();
-                gp2Rs.add(gp1);
-                input.put(gp2, gp2Rs);
-            }
-
-            // d1 can't give to sil1, c1 or c2
-            {
-                Set<Long> d1Rs = new HashSet<Long>();
-                d1Rs.add(sil1);
-                d1Rs.add(c1);
-                d1Rs.add(c2);
-                input.put(d1, d1Rs);
-            }
-
-            // d2 can't give to sil2, c3 or c4
-            {
-                Set<Long> d2Rs = new HashSet<Long>();
-                d2Rs.add(sil2);
-                d2Rs.add(c3);
-                d2Rs.add(c4);
-                input.put(d2, d2Rs);
-            }
-
-            // sil1 can't give to d1, c1 or c2
-            {
-                Set<Long> sil1Rs = new HashSet<Long>();
-                sil1Rs.add(d1);
-                sil1Rs.add(c1);
-                sil1Rs.add(c2);
-                input.put(sil1, sil1Rs);
-            }
-
-            // sil2 can't give to d2, c3 or c4
-            {
-                Set<Long> sil2Rs = new HashSet<Long>();
-                sil2Rs.add(d2);
-                sil2Rs.add(c3);
-                sil2Rs.add(c4);
-                input.put(sil2, sil2Rs);
-            }
-
-            // c1 can't give to d1,sil1 or c2
-            {
-                Set<Long> c1Rs = new HashSet<Long>();
-                c1Rs.add(d1);
-                c1Rs.add(sil1);
-                c1Rs.add(c2);
-                input.put(c1, c1Rs);
-            }
-
-            // c2 can't give to d1,sil1 or c1
-            {
-                Set<Long> c2Rs = new HashSet<Long>();
-                c2Rs.add(d1);
-                c2Rs.add(sil1);
-                c2Rs.add(c1);
-                input.put(c2, c2Rs);
-            }
-
-            // c3 can't give to d2,sil2 or c4
-            {
-                Set<Long> c3Rs = new HashSet<Long>();
-                c3Rs.add(d2);
-                c3Rs.add(sil2);
-                c3Rs.add(c4);
-                input.put(c3, c3Rs);
-            }
-
-            // c4 can't give to d2,sil2 or c3
-            {
-                Set<Long> c4Rs = new HashSet<Long>();
-                c4Rs.add(d2);
-                c4Rs.add(sil2);
-                c4Rs.add(c3);
-                input.put(c4, c4Rs);
-            }
-
-            // Sanity check the test member and restriction input
-            assertEquals(10, input.size());
-            assertEquals(1, input.get(gp1).size());
-            assertEquals(1, input.get(gp2).size());
-            assertEquals(3, input.get(d1).size());
-            assertEquals(3, input.get(sil1).size());
-            assertEquals(3, input.get(d2).size());
-            assertEquals(3, input.get(sil2).size());
-            assertEquals(3, input.get(c1).size());
-            assertEquals(3, input.get(c2).size());
-            assertEquals(3, input.get(c3).size());
-            assertEquals(3, input.get(c4).size());
-
             Map<Long, Long> result = engine.generateDraw(input);
             verifyResult(input, result);
         }
@@ -622,7 +520,7 @@ public abstract class AbstractDrawEngineTest {
      * @param input  (members and their restrictions)
      * @param result (assignments)
      */
-    public final void verifyResult(SortedMap<Long, Set<Long>> input, Map<Long, Long> result) {
+    public final void verifyResult(Map<Long, Set<Long>> input, Map<Long, Long> result) {
         // Verify same number of givers as entrants
         assertEquals(input.keySet().size(), result.size());
 

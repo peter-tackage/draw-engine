@@ -1,0 +1,27 @@
+# Two married grandparents, two daughters and sons-in-law and two children for each daughter.
+#
+#  I restricted spouses from giving to each other.
+#  I also restricted the grand children from giving to their siblings or their own parents
+#  and the middle generation parents from giving to their own children.
+#
+#  Maybe a tough challenge, but everyone should have had at least six people they could give to.
+#
+
+# gp1, gp2
+1 2
+2 1
+
+# d1, d2
+3 5,7,8
+4 6,9,10
+
+# sil1, sil2
+5 3,7,8
+6 4,9,10
+
+# c1, c2, c3, c4
+7 3,5,8
+8 3,5,7
+9 4,6,10
+10 4,6,9
+
