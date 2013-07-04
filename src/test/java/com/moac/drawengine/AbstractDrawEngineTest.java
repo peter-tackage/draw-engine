@@ -190,8 +190,6 @@ public abstract class AbstractDrawEngineTest {
      */
     @Test
     public void paulsScenario() throws DrawFailureException {
-        System.out.println("Testing: ");
-
         // TODO Control randomisation
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("pauls_test.txt");
 
