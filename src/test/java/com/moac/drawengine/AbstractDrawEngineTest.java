@@ -109,7 +109,7 @@ public abstract class AbstractDrawEngineTest {
      */
     @Test
     public void impossibleTooRestricted() throws DrawFailureException {
-        Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_too_restricted.txt");
+        Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_too_restricted_simple.txt");
         try {
             engine.generateDraw(input);
             fail("Draw should fail as no one gives m1");
@@ -133,7 +133,7 @@ public abstract class AbstractDrawEngineTest {
 
     @Test
     public void failEmptyMembers() {
-        Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_empty.txt");
+        Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_zero_members.txt");
         try {
             engine.generateDraw(input);
             fail("Should be impossible as empty members");
@@ -169,7 +169,7 @@ public abstract class AbstractDrawEngineTest {
      */
     @Test
     public void possibleSelfRestrict() throws DrawFailureException {
-        Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("self_restrict.txt");
+        Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("ignore_self_restrict.txt");
         Map<Long, Long> result = engine.generateDraw(input);
         verifyResult(input, result);
     }
@@ -186,13 +186,7 @@ public abstract class AbstractDrawEngineTest {
     }
 
     /*
-     * Two married grandparents, two daughters and sons-in-law and two children for each daughter.
-     *
-     *  I restricted spouses from giving to each other.
-     *  I also restricted the grand children from giving to their siblings or their own parents
-     *  and the middle generation parents from giving to their own children.
-     *
-     *  Maybe a tough challenge, but everyone should have had at least six people they could give to.
+     * Paul's scenario
      */
     @Test
     public void paulsScenario() throws DrawFailureException {
