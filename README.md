@@ -3,7 +3,7 @@ Draw Engine
 
 Cloudbees Jenkins Status
 
-[![Build Status](https://peter-tackage.ci.cloudbees.com/job/draw-engine/badge/icon)](https://peter-tackage.ci.cloudbees.com/job/draw-engine/)
+[![Build Status](https://peter-tackage.ci.cloudbees.com/buildStatus/icon?job=draw-engine)](https://peter-tackage.ci.cloudbees.com/job/draw-engine/)
 
 This is a Java library with an accompanying set of tests to perform Secret Santa / Kris Kringle draws.
 
