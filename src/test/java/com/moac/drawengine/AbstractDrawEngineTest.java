@@ -27,7 +27,7 @@ import java.util.Map.Entry;
 
 import static org.junit.Assert.*;
 
-/*
+/**
  * Tests suitable for all implementations of DrawEngine
  * 
  * Extend and implement any specific tests if required. Otherwise just
@@ -41,7 +41,7 @@ public abstract class AbstractDrawEngineTest {
     // This should be instantiated by the concrete implementations of this class.
     DrawEngine engine;
 
-    /**
+    /*
      * 1000 members, no restrictions. Should succeed.
      */
     @Test
@@ -56,7 +56,7 @@ public abstract class AbstractDrawEngineTest {
         verifyResult(input, result);
     }
 
-    /**
+    /*
      * Four members, no restrictions. Should succeed.
      */
     @Test
@@ -76,46 +76,33 @@ public abstract class AbstractDrawEngineTest {
         }
     }
 
-    /**
+    /*
      * Must have minimum two members
      */
-    @Test
-    public void failOnlyOneMember() {
+    @Test(expected = DrawFailureException.class)
+    public void failOnlyOneMember() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_single_member.txt");
-        try {
-            engine.generateDraw(input);
-            fail("Should be impossible as only one member");
-        } catch(DrawFailureException e) {
-            assertTrue(true);
-        }
+        engine.generateDraw(input);
     }
 
-    /**
+    /*
      * A complex scenario: m1 is restricted by all - should be impossible
      */
-    @Test
-    public void impossibleComplexRestrictions() {
+    @Test(expected = DrawFailureException.class)
+    public void impossibleComplexRestrictions() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_too_restricted_complex.txt");
-        try {
-            engine.generateDraw(input);
-            fail("Draw should fail as no one gives m1");
-        } catch(DrawFailureException e) {
-            assertTrue(true);
-        }
+        engine.generateDraw(input);
+        fail("Draw should fail as no one gives m1");
     }
 
     /*
      * A simple scenario: m1 is restricted by all - should be impossible
      */
-    @Test
+    @Test(expected = DrawFailureException.class)
     public void impossibleTooRestricted() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_too_restricted_simple.txt");
-        try {
-            engine.generateDraw(input);
-            fail("Draw should fail as no one gives m1");
-        } catch(DrawFailureException e) {
-            assertTrue(true);
-        }
+        engine.generateDraw(input);
+        fail("Draw should fail as no one gives m1");
     }
 
     /*
@@ -131,37 +118,25 @@ public abstract class AbstractDrawEngineTest {
         }
     }
 
-    @Test
-    public void failEmptyMembers() {
+    @Test(expected = DrawFailureException.class)
+    public void failEmptyMembers() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_zero_members.txt");
-        try {
-            engine.generateDraw(input);
-            fail("Should be impossible as empty members");
-        } catch(DrawFailureException e) {
-            assertTrue(true);
-        }
+        engine.generateDraw(input);
+        fail("Should be impossible as empty members");
     }
 
-    @Test
-    public void impossiblePairNotSymmetrical() {
+    @Test(expected = DrawFailureException.class)
+    public void impossiblePairNotSymmetrical() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_not_symmetrical.txt");
-        try {
-            engine.generateDraw(input);
-            fail("Should be impossible as one restricts the other");
-        } catch(DrawFailureException e) {
-            assertTrue(true);
-        }
+        engine.generateDraw(input);
+        fail("Should be impossible as one restricts the other");
     }
 
-    @Test
-    public void impossibleSymmetrical() {
+    @Test(expected = DrawFailureException.class)
+    public void impossibleSymmetrical() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("impossible_symmetrical.txt");
-        try {
-            engine.generateDraw(input);
-            fail("Should be impossible as both restrict each other");
-        } catch(DrawFailureException e) {
-            assertTrue(true);
-        }
+        engine.generateDraw(input);
+        fail("Should be impossible as both restrict each other");
     }
 
     /**
@@ -174,15 +149,10 @@ public abstract class AbstractDrawEngineTest {
         verifyResult(input, result);
     }
 
-    @Test
-    public void impossibleNullMembers() {
-
-        try {
-            engine.generateDraw(null);
-            fail("Should be impossible as null members");
-        } catch(DrawFailureException e) {
-            assertTrue(true);
-        }
+    @Test(expected = DrawFailureException.class)
+    public void impossibleNullMembers() throws DrawFailureException {
+        engine.generateDraw(null);
+        fail("Should be impossible as null members");
     }
 
     /*
