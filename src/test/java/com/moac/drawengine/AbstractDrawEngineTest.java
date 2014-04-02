@@ -182,6 +182,34 @@ public abstract class AbstractDrawEngineTest {
         }
     }
 
+    /*
+     * Test that the DrawEngine is randomizing the result
+     *
+     * This is based on the assumption that many consecutive draws will not
+     * return an identical result.
+     */
+    @Test
+    public void isRandomized() throws DrawFailureException {
+        final int MAX_DRAW_THRESHOLD = 50;
+        Map<Long, Long> lastResult = null;
+        for(int drawNumber = 0; drawNumber < MAX_DRAW_THRESHOLD ; drawNumber++) {
+            Map<Long, Set<Long>> input = new HashMap<Long, Set<Long>>();
+            // Add many members to make randomization more obvious
+            for(int i = 1; i <= 100; i++) {
+                Long m = (long) i;
+                // Add empty restrictions.
+                input.put(m, new HashSet<Long>());
+            }
+            Map<Long, Long> result = engine.generateDraw(Collections.unmodifiableMap(input));
+            verifyResult(input, result);
+            if(drawNumber != 0 && !isEqual(lastResult, result)){
+                return; // Draws is different - no need to continue
+            }
+            lastResult = result;
+        }
+        fail(String.format("DrawEngine produced %d consecutive identical draws", MAX_DRAW_THRESHOLD));
+    }
+
     /**
      * Verifies if a draw result was completed correctly.
      *
@@ -205,5 +233,21 @@ public abstract class AbstractDrawEngineTest {
             // Assignment is NOT a restriction of the giver
             assertFalse(input.get(entry.getKey()).contains(entry.getValue()));
         }
+    }
+
+    /**
+     * Returns true if the given draw results are equal, false otherwise.
+     *
+     * @param draw1 (assignments for one draw)
+     * @param draw2 (assignments for the other draw)
+     */
+    public static boolean isEqual(Map<Long,Long> draw1, Map<Long,Long> draw2) {
+         if(draw1 == draw2) return true;
+         if(draw1.size() != draw2.size()) return false;
+
+         for(Entry<Long, Long> entry : draw1.entrySet()) {
+           if(!entry.getValue().equals(draw2.get(entry.getKey()))) return false;
+         }
+         return true;
     }
 }

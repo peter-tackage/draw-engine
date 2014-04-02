@@ -80,8 +80,10 @@ public class BasicDrawEngine implements DrawEngine {
             for(Long pick : randomMembers) {
 
 				/*
-                 * 1. Can't pick self 2. Can't be restricted 3. Can't pick if
-				 * already picked 4.Can't pick a failed path for this node.
+                 * 1. Can't pick self
+                 * 2. Can't be restricted
+                 * 3. Can't pick if already picked
+                 * 4.Can't pick a failed path for this node.
 				 */
                 if(!(pick.equals(from) || members.get(from).contains(pick) || result
                   .containsValue(pick) || (nodeFailedPaths != null && nodeFailedPaths.contains(pick)))) {
