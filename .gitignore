@@ -5,3 +5,7 @@ target
 .classpath
 .project
 .settings
+
+#Ignore IntelliJ artifacts
+.idea
+*.iml
