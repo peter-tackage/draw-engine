@@ -21,8 +21,6 @@ import java.util.*;
 
 /**
  * A DrawEngine implemented using recursion
- *
- * FIXME Performance is poor, probably due to high cost and frequency of "rollbacks"
  */
 public class RecursiveDrawEngine implements DrawEngine {
 
@@ -45,12 +43,18 @@ public class RecursiveDrawEngine implements DrawEngine {
         List<Long> randomMembers = new ArrayList<Long>(members.keySet());
         Collections.shuffle(randomMembers, new Random());
 
-        return generateDrawImpl(members, randomMembers);
+        Map<Long, Long> draw = generateDrawImpl(members, randomMembers);
+        if(draw != null) {
+            return draw;
+        } else {
+            throw new DrawFailureException();
+        }
     }
 
     private Map<Long, Long> generateDrawImpl(final Map<Long, Set<Long>> members, List<Long> otherMembers)
       throws DrawFailureException {
-        if(members.size() == 0 && otherMembers.size() == 0) return new HashMap<Long, Long>();
+        if(members.size() == 0 && otherMembers.size() == 0)
+            return new HashMap<Long, Long>();
 
         for(Long self : members.keySet()) {
             Long pick = pick(self, members.get(self), otherMembers);
@@ -64,18 +68,18 @@ public class RecursiveDrawEngine implements DrawEngine {
                 List<Long> otherMembersSublist = new ArrayList<Long>(otherMembers);
                 membersSublist.remove(self);
                 otherMembersSublist.remove(pick);
-                try {
-                    // Recursively draw the remaining members
-                    result.putAll(generateDrawImpl(membersSublist, otherMembersSublist));
+
+                // Recursively draw the remaining members
+                Map<Long, Long> progressResult = generateDrawImpl(membersSublist, otherMembersSublist);
+                if(progressResult != null) {
+                    result.putAll(progressResult);
                     return result;
-                } catch (DrawFailureException dfe)  {
-                   // Explicitly ignore - this path is not possible. Move to next
                 }
             }
         }
 
-        // Could not create a result, throw control back to caller
-        throw new DrawFailureException();
+        // Could not create a result, return control back to caller
+        return null;
     }
 
     private static Long pick(Long self, Set<Long> restrictions, List<Long> others) {
@@ -86,5 +90,4 @@ public class RecursiveDrawEngine implements DrawEngine {
         }
         return null;
     }
-
 }
