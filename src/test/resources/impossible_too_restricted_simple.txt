@@ -1,5 +1,4 @@
-# Simple draw - two members only.
-# We should ignore attempts to self restrict - this draw should be possible.
+# Should be impossible as no member can give to member 1
 1
 2 1
 3 1
