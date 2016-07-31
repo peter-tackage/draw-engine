@@ -9,8 +9,8 @@ The library allows for a multiple implementations of the draw mechanism via the 
 
 There are currently two implementations:
 
-  1.  BasicDrawEngine
-  2.  RecursiveDrawEngine
+  1.  `BasicDrawEngine`
+  2.  `RecursiveDrawEngine`
 
 All DrawEngine implementations should at least fulfil the tests in the `AbstractDrawEngineTest` class.
 
