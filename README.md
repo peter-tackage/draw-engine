@@ -1,7 +1,9 @@
 Draw Engine
 ===========
 
-This is a Java library with an accompanying set of tests to perform Secret Santa / Kris Kringle draws.
+A Java library with an accompanying set of tests to perform Secret Santa / Kris Kringle draws.
+
+[![Build Status](https://travis-ci.org/peter-tackage/draw-engine.svg?branch=master)](https://travis-ci.org/peter-tackage/draw-engine)
 
 The library allows for a multiple implementations of the draw mechanism via the `DrawEngine` interface.
 
