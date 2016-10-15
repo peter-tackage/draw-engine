@@ -1,23 +1,22 @@
 package com.moac.drawengine;
 
-/**
- *  Copyright 2011 Peter Tackage
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+/*
+ * Copyright 2011 Peter Tackage
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-import com.moac.drawengine.util.TestDataUtils;
+import com.moac.drawengine.test.TestDataUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,17 +28,17 @@ import static org.junit.Assert.*;
 
 /**
  * Tests suitable for all implementations of DrawEngine
- * 
+ *
  * Extend and implement any specific tests if required. Otherwise just
  * extend as per @BasicDrawEngineTest
- * 
+ *
  */
 @RunWith(JUnit4.class)
 public abstract class AbstractDrawEngineTest {
 
     // The DrawEngine under test.
     // This should be instantiated by the concrete implementations of this class.
-    DrawEngine engine;
+    protected DrawEngine engine;
 
     /*
      * 1000 members, no restrictions. Should succeed.
@@ -47,7 +46,7 @@ public abstract class AbstractDrawEngineTest {
     @Test
     public void possibleManyMembers() throws DrawFailureException {
         Map<Long, Set<Long>> input = new HashMap<Long, Set<Long>>();
-        for(int i = 1; i <= 1000; i++) {
+        for (int i = 1; i <= 1000; i++) {
             Long m = (long) i;
             // Add empty restrictions.
             input.put(m, new HashSet<Long>());
@@ -70,7 +69,7 @@ public abstract class AbstractDrawEngineTest {
     public void possibleComplexRestrictions() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("possible_complex.txt");
         // TODO Control randomisation
-        for(int i = 0; i < 500; i++) {
+        for (int i = 0; i < 500; i++) {
             Map<Long, Long> result = engine.generateDraw(input);
             verifyResult(input, result);
         }
@@ -112,7 +111,7 @@ public abstract class AbstractDrawEngineTest {
     public void possibleSinglePath() throws DrawFailureException {
         Map<Long, Set<Long>> input = TestDataUtils.readTestDataFile("possible_single_path.txt");
         // TODO Test Randomisation
-        for(int i = 0; i < 500.; i++) {
+        for (int i = 0; i < 500.; i++) {
             Map<Long, Long> result = engine.generateDraw(input);
             verifyResult(input, result);
         }
@@ -165,18 +164,18 @@ public abstract class AbstractDrawEngineTest {
 
         // Sanity check the test member and restriction input
         assertEquals(10, input.size());
-        assertEquals(1, input.get(1l).size());
-        assertEquals(1, input.get(2l).size());
-        assertEquals(3, input.get(3l).size());
-        assertEquals(3, input.get(4l).size());
-        assertEquals(3, input.get(5l).size());
-        assertEquals(3, input.get(6l).size());
-        assertEquals(3, input.get(7l).size());
-        assertEquals(3, input.get(8l).size());
-        assertEquals(3, input.get(9l).size());
-        assertEquals(3, input.get(10l).size());
+        assertEquals(1, input.get(1L).size());
+        assertEquals(1, input.get(2L).size());
+        assertEquals(3, input.get(3L).size());
+        assertEquals(3, input.get(4L).size());
+        assertEquals(3, input.get(5L).size());
+        assertEquals(3, input.get(6L).size());
+        assertEquals(3, input.get(7L).size());
+        assertEquals(3, input.get(8L).size());
+        assertEquals(3, input.get(9L).size());
+        assertEquals(3, input.get(10L).size());
 
-        for(int i = 0; i < 500; i++) {
+        for (int i = 0; i < 500; i++) {
             Map<Long, Long> result = engine.generateDraw(input);
             verifyResult(input, result);
         }
@@ -192,17 +191,17 @@ public abstract class AbstractDrawEngineTest {
     public void isRandomized() throws DrawFailureException {
         final int MAX_DRAW_THRESHOLD = 50;
         Map<Long, Long> lastResult = null;
-        for(int drawNumber = 0; drawNumber < MAX_DRAW_THRESHOLD ; drawNumber++) {
+        for (int drawNumber = 0; drawNumber < MAX_DRAW_THRESHOLD; drawNumber++) {
             Map<Long, Set<Long>> input = new HashMap<Long, Set<Long>>();
             // Add many members to make randomization more obvious
-            for(int i = 1; i <= 100; i++) {
+            for (int i = 1; i <= 100; i++) {
                 Long m = (long) i;
                 // Add empty restrictions.
                 input.put(m, new HashSet<Long>());
             }
             Map<Long, Long> result = engine.generateDraw(Collections.unmodifiableMap(input));
             verifyResult(input, result);
-            if(drawNumber != 0 && !isEqual(lastResult, result)){
+            if (drawNumber != 0 && !isEqual(lastResult, result)) {
                 return; // Draws is different - no need to continue
             }
             lastResult = result;
@@ -223,7 +222,7 @@ public abstract class AbstractDrawEngineTest {
         // Verify all givers assign to non-null
         assertFalse(result.containsValue(null));
 
-        for(Entry<Long, Long> entry : result.entrySet()) {
+        for (Entry<Long, Long> entry : result.entrySet()) {
             // Assignment is one of the entrant members
             assertTrue(input.containsKey(entry.getValue()));
 
@@ -241,13 +240,13 @@ public abstract class AbstractDrawEngineTest {
      * @param draw1 (assignments for one draw)
      * @param draw2 (assignments for the other draw)
      */
-    public static boolean isEqual(Map<Long,Long> draw1, Map<Long,Long> draw2) {
-         if(draw1 == draw2) return true;
-         if(draw1.size() != draw2.size()) return false;
+    public static boolean isEqual(Map<Long, Long> draw1, Map<Long, Long> draw2) {
+        if (draw1 == draw2) return true;
+        if (draw1.size() != draw2.size()) return false;
 
-         for(Entry<Long, Long> entry : draw1.entrySet()) {
-           if(!entry.getValue().equals(draw2.get(entry.getKey()))) return false;
-         }
-         return true;
+        for (Entry<Long, Long> entry : draw1.entrySet()) {
+            if (!entry.getValue().equals(draw2.get(entry.getKey()))) return false;
+        }
+        return true;
     }
 }

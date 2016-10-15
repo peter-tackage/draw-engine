@@ -23,11 +23,11 @@ public class DrawFailureException extends Exception {
     /**
      * @param msg A message describing why the draw failed.
      */
-    public DrawFailureException(String msg) {
+    DrawFailureException(String msg) {
         super(msg);
     }
 
-    public DrawFailureException() {
+    DrawFailureException() {
         super();
     }
 }
